@@ -43,8 +43,8 @@ train, test = dataset[0:train_size, :], dataset[train_size:len(dataset), :]
 print("Training set size:", len(train), "\nTest set size:", len(test))
 
 
-def create_dataset(dataset, look_back=1):
-    data_x, data_y = [], []
+def create_dataset(dataset, look_back=1):    # look_back=1 : This value refers to how far the algorithm "looks back" to predict the next data point
+    data_x, data_y = [], []                  # Since stock price doesn't change drastically overnight, looking back one day is sensible 
     for i in range(len(dataset)-look_back-1):
         a = dataset[i:(i+look_back), 0]
         data_x.append(a)
