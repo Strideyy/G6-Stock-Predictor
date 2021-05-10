@@ -10,14 +10,14 @@ import math
 from sklearn.metrics import mean_squared_error
 
 
-ROOT_PATH = "C:\\Users\\John\\Desktop\\University\\Second Year\\Team Software Engineering\\Assessment 3\\External\\archive\\stocks"
-# Locally stored for now, until I find a proper remote host
+ROOT_PATH = ROOT_PATH = "https://raw.githubusercontent.com/Strideyy/G6-Stock-Predictor/master/sample/"
+
 
 numpy.random.seed(7)
 
 
 def load_stock_data(root_path=ROOT_PATH):
-    csv_path = os.path.join(root_path, "ACAM.csv")
+    csv_path = os.path.join(root_path, "SNA.csv") # MUST be a .csv located in /master/sample
     return pd.read_csv(csv_path, usecols=['Close'])
 
 
