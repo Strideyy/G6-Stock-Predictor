@@ -10,14 +10,13 @@ import math
 from sklearn.metrics import mean_squared_error
 
 
-ROOT_PATH = ROOT_PATH = "https://raw.githubusercontent.com/Strideyy/G6-Stock-Predictor/master/sample/"
-
+ROOT_PATH = "https://raw.githubusercontent.com/Strideyy/G6-Stock-Predictor/master/sample/"
 
 numpy.random.seed(7)
 
 
 def load_stock_data(root_path=ROOT_PATH):
-    csv_path = os.path.join(root_path, "SNA.csv") # MUST be a .csv located in /master/sample
+    csv_path = os.path.join(root_path, "SNA.csv") # IMPORTANT: MUST be a valid .csv located in /master/sample/
     return pd.read_csv(csv_path, usecols=['Close'])
 
 
@@ -33,24 +32,27 @@ def create_dataset(dataset, look_back):
     return numpy.array(data_x), numpy.array(data_y)
 
 
-stock_data = load_stock_data()
+def split_data():
+    stock_data = load_stock_data()
 
-dataset = stock_data.values
-dataset = dataset.astype('float32')
+    dataset = stock_data.values
+    dataset = dataset.astype('float32')
 
-scaler = MinMaxScaler(feature_range=(0, 1))  # Normalise for better performance
-dataset = scaler.fit_transform(dataset)
+    scaler = MinMaxScaler(feature_range=(0, 1))  # Normalise for better performance
+    dataset = scaler.fit_transform(dataset)
 
-train_size = int(len(dataset) * 0.70)  # Training set size: 70%
-test_size = len(dataset) - train_size  # Test set size: remaining 30%
-train, test = dataset[0:train_size, :], dataset[train_size:len(dataset), :]
-print("Training set size:", len(train), "\nTest set size:", len(test))
+    train_size = int(len(dataset) * 0.70)  # Training set size: 70%
+    test_size = len(dataset) - train_size  # Test set size: remaining 30%
+    train, test = dataset[0:train_size, :], dataset[train_size:len(dataset), :]
+    print("Training set size:", len(train), "\nTest set size:", len(test))
 
-trainX, trainY = create_dataset(train, look_back)
-testX, testY = create_dataset(test, look_back)
+    trainX, trainY = create_dataset(train, look_back)
+    testX, testY = create_dataset(test, look_back)
 
-trainX = numpy.reshape(trainX, (trainX.shape[0], trainX.shape[1], 1))
-testX = numpy.reshape(testX, (testX.shape[0], testX.shape[1], 1))
+    trainX = numpy.reshape(trainX, (trainX.shape[0], trainX.shape[1], 1))
+    testX = numpy.reshape(testX, (testX.shape[0], testX.shape[1], 1))
+
+    return trainX, testX, trainY, testY, dataset, scaler
 
 
 def create_model(look_back):
@@ -61,7 +63,7 @@ def create_model(look_back):
     return model 
 
 
-def train_test(look_back, trainX, testX, trainY, testY, dataset):
+def train_test(look_back, trainX, testX, trainY, testY, dataset, scaler):
     model = create_model(look_back)
     model.fit(trainX, trainY, epochs=100, batch_size=1, verbose=2)
     
@@ -78,10 +80,10 @@ def train_test(look_back, trainX, testX, trainY, testY, dataset):
     testScore = math.sqrt(mean_squared_error(testY[0], testPredict[:, 0]))
     print('Test Score: %.2f RMSE' % (testScore))
 
-    plot(trainPredict, testPredict, dataset)
+    plot(trainPredict, testPredict, dataset, scaler)
 
 
-def plot(trainPredict, testPredict, dataset):
+def plot(trainPredict, testPredict, dataset, scaler):
     trainPredictPlot = numpy.empty_like(dataset)
     trainPredictPlot[:, :] = numpy.nan
     trainPredictPlot[look_back:len(trainPredict)+look_back, :] = trainPredict
@@ -93,7 +95,4 @@ def plot(trainPredict, testPredict, dataset):
     plt.plot(scaler.inverse_transform(dataset))
     plt.plot(trainPredictPlot)
     plt.plot(testPredictPlot)
-    plt.show()
-
-
-train_test(look_back, trainX, testX, trainY, testY, dataset)
+    
