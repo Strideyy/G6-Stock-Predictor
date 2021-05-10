@@ -13,3 +13,11 @@
 ## Version 0.2.0:
 - Function for creating an array where X is the price of one share, and Y is the price of that share the next day.
 
+## Version 0.3.0:
+- raw data aquisition and splitting has been separated 
+- LSTM model created
+- model fit to training split data
+- model tested on test split data
+- RMSE scores shown
+- graph plotted to show model fit accuracy
+- main.py is accessible from another file
