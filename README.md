@@ -2,11 +2,12 @@
 
 ## How to run:
 - Save both files *'main.py'* and *'run_main.py'* in the same directory
-- **Using Jupyter:**
-  - Run Jupyter from the same directory as *'main.py'*
-  - Make sure you have all the correct python packages (see below for install guide)
-  - Execute *'run_main.py'* in the first cell
-  - Wait a few minutes for graph output (this takes more time for larger datasets)
+ - __Run Jupyter from the same directory as *'main.py'*__
+   - That is, if *'main.py'* is stored in C:\Users\John\Documents\Project\
+   - You must also run jupyter from C:\Users\John\Documents\Project\
+ - Make sure you have all the correct python packages (see below for install guide)
+ - Execute *'run_main.py'* in the first cell
+ - Wait a few minutes for graph output (this takes more time for larger datasets)
 
 - Python package install (command prompt):
   -  pip install --user -U pandas numpy matplotlib sklearn keras tensorflow 
