@@ -30,49 +30,44 @@ stockEntryLabel.place(x=20, y=50)
 stockEntry = Entry(window, width=20) #Needs validation against dataset
 stockEntry.place(x=20, y=75)
 
-def getEntry (): #Collects the input from the entry box
-    stockEntryChoice = stockEntry.get()
-
 def showTheGraph():
-    #url ='https://raw.githubusercontent.com/Strideyy/G6-Stock-Predictor/master/sample/' + stockEntry.get() + '.csv'
-    index = main.split_data(stockEntry.get())
-    result = main.train_test(1, index[0],index[1],index[2],index[3],index[4],index[5])
-    plot_result = main.plot(result[0],result[1],result[2],result[3]) 
+    url ='https://raw.githubusercontent.com/Strideyy/G6-Stock-Predictor/master/sample/' + stockEntry.get() + '.csv'
+    df = pd.read_csv(url, index_col=-1)
+
+    figure = plt.Figure(figsize=(7.75,3.5), dpi=100)
+    ax = figure.add_subplot(111)
+    chart_type = FigureCanvasTkAgg(figure, window)
+    chart_type.get_tk_widget().place(x=500, y=50)
+    df = df[['Date','Close']].groupby('Date').sum()
+    df.plot(kind='line', legend=True, ax=ax)
+    ax.set_title('Closing Share Prices Over Time')
+
     #fig = px.line(df, x = 'Date', y = 'Close', title='Closing Share Prices Over Time')
-    plt.plot(plot_result[0])
-    plt.plot(plot_result[1])
-    plt.show()
+    #fig.show()
     
 stockEntryButton = Button(window, text="Enter", anchor=CENTER, command=showTheGraph) #Runs command for entry input
 stockEntryButton.place(x=150, y=75)
 
 ##############################################################################
-stockPurchaseLabel = Label(window, text="Enter Number Of Shares To Buy (At Most Recent Closing Price):")
+
+stockPurchaseLabel = Label(window, text="Click Here To Run LSTM Model (may take a few minutes)")
 stockPurchaseLabel.place(x=20, y=100)
 
-stockPurchase = Entry(window, width=20)
-stockPurchase.place(x=20, y=125)
+def showModelGraph():
+    index = main.split_data(stockEntry.get())
+    result = main.train_test(1, index[0],index[1],index[2],index[3],index[4],index[5])
+    plot_result = main.plot(result[0],result[1],result[2],result[3]) 
 
-stockPurchaseButton = Button(window, text="Enter", anchor=CENTER) #Needs command
-stockPurchaseButton.place(x=150, y=125)
-##############################################################################
-lossStoppageLabel = Label(window, text="Enter Loss Stoppage Amount (Optional):")
-lossStoppageLabel.place(x=20, y=150)
+    fig = plt.figure(figsize = (10.75,4.5)) 
+    graph = FigureCanvasTkAgg(fig, window)
+    graph.draw()
+    graph.get_tk_widget().place(x=500, y=410)
+    plt.xlabel('Time Step',fontsize=18)
+    plt.ylabel('Close Price',fontsize=18)
+    plt.plot(plot_result[0], "-b", label="Training Data")
+    plt.plot(plot_result[1], "-r", label="Test Data")
+    plt.legend(loc="upper right")
 
-lossStoppage = Entry(window, width=20)
-lossStoppage.place(x=20, y=175)
-
-lossStoppageButton = Button(window, text="Enter", anchor=CENTER) #Needs command
-lossStoppageButton.place(x=150, y=175)
-##############################################################################
-sellPointLabel = Label(window, text="Enter The Point You Wish To Sell At (Optional):")
-sellPointLabel.place(x=20, y=200)
-
-sellPoint = Entry(window, width=20)
-sellPoint.place(x=20, y=225)
-
-sellPointButton = Button(window, text="Enter", anchor=CENTER) #Needs command
-sellPointButton.place(x=150, y=225)
 ##############################################################################
 
 window.mainloop() #Run window

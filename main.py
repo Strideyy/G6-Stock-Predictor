@@ -13,8 +13,10 @@ from sklearn.metrics import mean_squared_error
 
 def load_stock_data(user_choice):
     root_path = "https://raw.githubusercontent.com/Strideyy/G6-Stock-Predictor/master/sample/"
-    csv_path = os.path.join(root_path, user_choice) # IMPORTANT: MUST be a valid .csv located in /master/sample/
+    csv_path = os.path.join(root_path, user_choice + ".csv") # IMPORTANT: MUST be a valid .csv located in /master/sample/
+    print(csv_path)
     return pd.read_csv(csv_path, usecols=['Close'])
+
 
 
 numpy.random.seed(7) # Fix seed for reporoducibility 
@@ -66,7 +68,7 @@ def create_model(look_back):
 
 def train_test(look_back, trainX, testX, trainY, testY, dataset, scaler):
     model = create_model(look_back)
-    model.fit(trainX, trainY, epochs=5, batch_size=1, verbose=0)
+    model.fit(trainX, trainY, epochs=1, batch_size=1, verbose=0)
     
     trainPredict = model.predict(trainX)
     testPredict = model.predict(testX)
