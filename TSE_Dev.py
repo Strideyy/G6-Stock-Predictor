@@ -38,8 +38,10 @@ def showTheGraph():
     index = main.split_data()
     result = main.train_test(1, index[0],index[1],index[2],index[3],index[4],index[5])
     plot_result = main.plot(result[0],result[1],result[2],result[3]) 
-    fig = px.line(plot_result, x = 'Date', y = 'Close', title='Closing Share Prices Over Time')
-    fig.show()
+    #fig = px.line(df, x = 'Date', y = 'Close', title='Closing Share Prices Over Time')
+    plt.plot(plot_result[0])
+    plt.plot(plot_result[1])
+    plt.show()
     
 stockEntryButton = Button(window, text="Enter", anchor=CENTER, command=showTheGraph) #Runs command for entry input
 stockEntryButton.place(x=150, y=75)
@@ -72,7 +74,5 @@ sellPoint.place(x=20, y=225)
 sellPointButton = Button(window, text="Enter", anchor=CENTER) #Needs command
 sellPointButton.place(x=150, y=225)
 ##############################################################################
-
-window.mainloop() #Run window
 
 window.mainloop() #Run window
