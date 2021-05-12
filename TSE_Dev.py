@@ -37,10 +37,9 @@ def showTheGraph():
     #url ='https://raw.githubusercontent.com/Strideyy/G6-Stock-Predictor/master/sample/' + stockEntry.get() + '.csv'
     index = main.split_data()
     result = main.train_test(1, index[0],index[1],index[2],index[3],index[4],index[5])
-    plot_result = main.plot(result[0],result[1],result[2],result[3])
-    plot_result.show()
-    #fig = px.line(df, x = 'Date', y = 'Close', title='Closing Share Prices Over Time')
-    #ig.show()  
+    plot_result = main.plot(result[0],result[1],result[2],result[3]) 
+    fig = px.line(plot_result, x = 'Date', y = 'Close', title='Closing Share Prices Over Time')
+    fig.show()
     
 stockEntryButton = Button(window, text="Enter", anchor=CENTER, command=showTheGraph) #Runs command for entry input
 stockEntryButton.place(x=150, y=75)
@@ -73,5 +72,7 @@ sellPoint.place(x=20, y=225)
 sellPointButton = Button(window, text="Enter", anchor=CENTER) #Needs command
 sellPointButton.place(x=150, y=225)
 ##############################################################################
+
+window.mainloop() #Run window
 
 window.mainloop() #Run window
