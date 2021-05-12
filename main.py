@@ -6,23 +6,23 @@ from sklearn.preprocessing import MinMaxScaler
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import LSTM
+from keras.layers import Dropout 
 import math
 from sklearn.metrics import mean_squared_error
 
-
+# Path to csv files
 ROOT_PATH = "https://raw.githubusercontent.com/Strideyy/G6-Stock-Predictor/master/sample/"
-
-numpy.random.seed(7)
 
 
 def load_stock_data(root_path=ROOT_PATH):
-    csv_path = os.path.join(root_path, "SNA.csv") # IMPORTANT: MUST be a valid .csv located in /master/sample/
+    csv_path = os.path.join(root_path, "ADM.csv") # IMPORTANT: MUST be a valid .csv located in /master/sample/
     return pd.read_csv(csv_path, usecols=['Close'])
 
 
+numpy.random.seed(7) # Fix seed for reporoducibility 
 look_back = 1
 
-
+# Converting dataset to matrix, X = t (
 def create_dataset(dataset, look_back):
     data_x, data_y = [], []
     for i in range(len(dataset)-look_back-1):
@@ -57,15 +57,18 @@ def split_data():
 
 def create_model(look_back):
     model = Sequential()
-    model.add(LSTM(4, input_shape=(1, look_back)))
+
+    model.add(LSTM(units = 4, input_shape=(1, look_back)))
+
     model.add(Dense(1))
+
     model.compile(loss='mean_squared_error', optimizer='adam')
     return model 
 
 
 def train_test(look_back, trainX, testX, trainY, testY, dataset, scaler):
     model = create_model(look_back)
-    model.fit(trainX, trainY, epochs=100, batch_size=1, verbose=2)
+    model.fit(trainX, trainY, epochs=5, batch_size=1, verbose=0)
     
     trainPredict = model.predict(trainX)
     testPredict = model.predict(testX)
@@ -80,7 +83,7 @@ def train_test(look_back, trainX, testX, trainY, testY, dataset, scaler):
     testScore = math.sqrt(mean_squared_error(testY[0], testPredict[:, 0]))
     print('Test Score: %.2f RMSE' % (testScore))
 
-    plot(trainPredict, testPredict, dataset, scaler)
+    return trainPredict, testPredict, dataset, scaler
 
 
 def plot(trainPredict, testPredict, dataset, scaler):
@@ -93,6 +96,7 @@ def plot(trainPredict, testPredict, dataset, scaler):
     testPredictPlot[len(trainPredict)+(look_back*2)+1:len(dataset)-1, :] = testPredict
     # plot baseline and predictions
     plt.plot(scaler.inverse_transform(dataset))
-    plt.plot(trainPredictPlot)
-    plt.plot(testPredictPlot)
+    #plt.plot(trainPredictPlot)
+    #plt.plot(testPredictPlot)
     
+    return trainPredictPlot, testPredictPlot
