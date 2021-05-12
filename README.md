@@ -1,34 +1,26 @@
 # G6-Stock-Predictor
+A machine learning program, used to predict stocks. Currently using NASDAQ data. 
 
-## How to run:
-- Save both files *'main.py'* and *'run_main.py'* in the same directory
- - __Run Jupyter from the same directory as *'main.py'*__
-   - That is, if *'main.py'* is stored in C:\Users\John\Documents\Project\
-   - You must also run jupyter from C:\Users\John\Documents\Project\
- - Make sure you have all the correct python packages (see below for install guide)
- - Execute *'run_main.py'* in the first cell
- - Wait a few minutes for graph output (this takes more time for larger datasets)
+# How to use:
+To use this program, install from this repository and run the TSE_dev.py file. Work through the text boxes and click enter after each input to see a graph of that company's historical performance and a prediction graph from your investment. Alternatively, follow the video guide found here. 
+https://www.youtube.com/channel/UCxImnvIgyTMVsgd4LL6944A
 
-- Python package install (command prompt):
-  -  pip install --user -U pandas numpy matplotlib sklearn keras tensorflow 
+# FAQ's
+=> What machine learning model does this use?
 
-### Initial Commit: 
-- Opening CSV file as Pandas DataFrame object (https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html).
-- Shows stock high prices over time.
+We are currently utilising the LSTM (Long-short-term-memory) model to train our dataset for a prediction. 
 
-### Version 0.1.0:
-- Line graph for visualisation purposes
-- Normalise data
-- Create 70-30 train-test data split
+=> Can this model be applied to other datasets?
 
-### Version 0.2.0:
-- Function for creating an array where X is the price of one share, and Y is the price of that share the next day.
+This feature will come in the next update. 
 
-### Version 0.3.0:
-- raw data aquisition and splitting has been separated 
-- LSTM model created
-- model fit to training split data
-- model tested on test split data
-- RMSE scores shown
-- graph plotted to show model fit accuracy
-- main.py is accessible from another file
+=> Is there a way to report bugs?
+
+Yes, feel free to add a new issue through GitHub or contact us directly via tseg6lincoln@outlook.com
+
+=> When is the next update?
+
+Hopefully sometime in June or July. 
+
+# TO DO:
+- 
