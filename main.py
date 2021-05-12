@@ -96,7 +96,7 @@ def plot(trainPredict, testPredict, dataset, scaler):
     testPredictPlot[len(trainPredict)+(look_back*2)+1:len(dataset)-1, :] = testPredict
     # plot baseline and predictions
     plt.plot(scaler.inverse_transform(dataset))
-    #plt.plot(trainPredictPlot)
-    #plt.plot(testPredictPlot)
+    plt.plot(trainPredictPlot)
+    plt.plot(testPredictPlot)
     
-    return trainPredictPlot, testPredictPlot
+    return plt
