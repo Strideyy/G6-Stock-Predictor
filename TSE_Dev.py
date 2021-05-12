@@ -38,9 +38,9 @@ def showTheGraph():
     index = main.split_data()
     result = main.train_test(1, index[0],index[1],index[2],index[3],index[4],index[5])
     plot_result = main.plot(result[0],result[1],result[2],result[3])
-    df = pd.DataFrame(plot_result[0], plot_result[1])
-    fig = px.line(df, x = 'Date', y = 'Close', title='Closing Share Prices Over Time')
-    fig.show()  
+    plot_result.show()
+    #fig = px.line(df, x = 'Date', y = 'Close', title='Closing Share Prices Over Time')
+    #ig.show()  
     
 stockEntryButton = Button(window, text="Enter", anchor=CENTER, command=showTheGraph) #Runs command for entry input
 stockEntryButton.place(x=150, y=75)
