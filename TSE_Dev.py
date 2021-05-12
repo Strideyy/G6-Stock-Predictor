@@ -30,12 +30,12 @@ stockEntryLabel.place(x=20, y=50)
 stockEntry = Entry(window, width=20) #Needs validation against dataset
 stockEntry.place(x=20, y=75)
 
-#def getEntry (): #Collects the input from the entry box
-#stockEntryChoice = stockEntry.get()
+def getEntry (): #Collects the input from the entry box
+    stockEntryChoice = stockEntry.get()
 
 def showTheGraph():
     #url ='https://raw.githubusercontent.com/Strideyy/G6-Stock-Predictor/master/sample/' + stockEntry.get() + '.csv'
-    index = main.split_data()
+    index = main.split_data(stockEntry.get())
     result = main.train_test(1, index[0],index[1],index[2],index[3],index[4],index[5])
     plot_result = main.plot(result[0],result[1],result[2],result[3]) 
     #fig = px.line(df, x = 'Date', y = 'Close', title='Closing Share Prices Over Time')

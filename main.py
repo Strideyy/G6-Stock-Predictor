@@ -10,12 +10,10 @@ from keras.layers import Dropout
 import math
 from sklearn.metrics import mean_squared_error
 
-# Path to csv files
-ROOT_PATH = "https://raw.githubusercontent.com/Strideyy/G6-Stock-Predictor/master/sample/"
 
-
-def load_stock_data(root_path=ROOT_PATH):
-    csv_path = os.path.join(root_path, "ADM.csv") # IMPORTANT: MUST be a valid .csv located in /master/sample/
+def load_stock_data(user_choice):
+    root_path = "https://raw.githubusercontent.com/Strideyy/G6-Stock-Predictor/master/sample/"
+    csv_path = os.path.join(root_path, user_choice) # IMPORTANT: MUST be a valid .csv located in /master/sample/
     return pd.read_csv(csv_path, usecols=['Close'])
 
 
@@ -32,8 +30,8 @@ def create_dataset(dataset, look_back):
     return numpy.array(data_x), numpy.array(data_y)
 
 
-def split_data():
-    stock_data = load_stock_data()
+def split_data(user_choice):
+    stock_data = load_stock_data(user_choice)
 
     dataset = stock_data.values
     dataset = dataset.astype('float32')
@@ -95,7 +93,9 @@ def plot(trainPredict, testPredict, dataset, scaler):
     testPredictPlot[:, :] = numpy.nan
     testPredictPlot[len(trainPredict)+(look_back*2)+1:len(dataset)-1, :] = testPredict
     # plot baseline and predictions
-    #plt.plot(trainPredict)
-    #plt.plot(testPredict)
+    #plt.plot(trainPredictPlot)
+    #plt.plot(testPredictPlot)
     
+    print(trainPredictPlot)
+
     return trainPredictPlot, testPredictPlot
